@@ -1,0 +1,42 @@
+#include <ArduinoJson.h> // Inclui a biblioteca ArduinoJson, que facilita a manipulação de dados no formato JSON.
+
+// Define os pinos para o sensor ultrassônico
+const int triggerPin = 12;
+const int echoPin = 14;
+const int speedOfSound = 343; // Velocidade do som em m/s
+long duration; // Variável para armazenar a duração do pulso
+int distance_cm; // Variável para armazenar a distância calculada em centímetros
+int h_container = 400; // Altura do recipiente em cm
+int h_allowed = 200; // Altura máxima permitida para o lixo em cm
+
+void setup() {
+  Serial.begin(9600); // Inicializa a comunicação serial a 9600 bps
+  pinMode(triggerPin, OUTPUT); // Configura o pino trigger como saída
+  pinMode(echoPin, INPUT); // Configura o pino echo como entrada
+}
+
+long readUltrasonicDistance() {
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
+  return pulseIn(echoPin, HIGH); // Retorna a duração do pulso em microsegundos
+}
+
+void loop() {
+  duration = readUltrasonicDistance(); // Lê a duração do pulso do sensor ultrassônico
+  distance_cm = duration * 0.034 / 2; // Converte a duração para distância em cm
+
+  StaticJsonDocument<200> doc; // Cria um documento JSON estático com capacidade de 200 bytes
+  if (distance_cm < h_container - h_allowed) {
+    Serial.println("Lixo acima da altura permitida!"); // Imprime mensagem de alerta no serial
+    doc["status"] = "full"; // Adiciona o status "full" ao documento JSON
+  } else {
+    doc["status"] = "not full"; // Adiciona o status "not full" ao documento JSON
+  }
+  serializeJson(doc, Serial); // Serializa o documento JSON e envia para a saída serial
+  Serial.println(); // Envia uma nova linha para a saída serial
+
+  delay(3000); // Aguarda 3 segundos antes de repetir o loop
+}
