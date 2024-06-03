@@ -16,7 +16,6 @@ Materiais Necessários
 - Esp32
 - Sensor Ultrassônico HC-SR04
 - Fios jumper
-- Bateria 9v 
 
 Instruções de montagem:
 
