@@ -1,3 +1,5 @@
+Esse repositório contém a entrega do grupo wave.clear para a Global Solution em parceria com a Oceans20 para competência de Edge Computing e Computer Systems da turma 1ESPA. 
+
 Nós da waveclear visamos utilizar sensores ultrassônicos em contêineres feitos de cortiça para facilitar o escoamento de lixo dos rios para evitar que ele atinja os oceanos. A cortiça é escolhida como material por sua flutuabilidade, biodegradabilidade e sustentabilidade, oferecendo uma solução ambientalmente amigável para este problema global.
 
 Funcionalidades:
